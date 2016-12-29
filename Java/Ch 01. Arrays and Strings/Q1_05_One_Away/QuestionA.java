@@ -9,13 +9,12 @@ public class QuestionA {
 				if (foundDifference) {
 					return false;
 				}
-				
 				foundDifference = true;
 			}
 		}
 		return true;
 	}
-	
+
 	/* Check if you can insert a character into s1 to make s2. */
 	public static boolean oneEditInsert(String s1, String s2) {
 		int index1 = 0;
@@ -24,7 +23,7 @@ public class QuestionA {
 			if (s1.charAt(index1) != s2.charAt(index2)) {
 				if (index1 != index2) {
 					return false;
-				}		
+				}
 				index2++;
 			} else {
 				index1++;
@@ -32,8 +31,8 @@ public class QuestionA {
 			}
 		}
 		return true;
-	}	
-	
+	}
+
 	public static boolean oneEditAway(String first, String second) {
 		if (first.length() == second.length()) {
 			return oneEditReplace(first, second);
@@ -41,10 +40,10 @@ public class QuestionA {
 			return oneEditInsert(first, second);
 		} else if (first.length() - 1 == second.length()) {
 			return oneEditInsert(second, first);
-		} 
+		}
 		return false;
 	}
-	
+
 	public static void main(String[] args) {
 		String a = "pse";
 		String b = "pale";
