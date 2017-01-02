@@ -1,5 +1,5 @@
 // Linked list implementation
-class LList implements List {
+class DLList implements DList {
     private Link head;         // Pointer to list header
     private Link tail;         // Pointer to last element
     private Link curr;         // Access to current element
@@ -24,20 +24,21 @@ class LList implements List {
 
     // Insert "it" at current position
     public boolean insert(Object it) {
-        curr.setNext(new Link(curr.element(), curr.next()));
-        curr.setElement(it);
-        if (tail == curr) {
-            tail = curr.next();  // New tail
-        }
-        listSize++;
+        curr = new Link(it, curr.prev(), curr);
+        curr.prev().setNext(curr);
+        curr.next().setPrev(curr);
+        listSize++
         return true;
+
     }
 
     // Append "it" to list
     public boolean append(Object it) {
-        tail.setNext(new Link(null));
-        tail.setElement(it);
-        tail = tail.next();
+        tail.setPrev(new Link(ot, tail.prev(), tail));
+        tail.prev().prev() setNext(tail.prev());
+        if (curr == tail) {
+            curr = tail.prev();
+        }
         listSize++;
         return true;
     }
@@ -45,18 +46,14 @@ class LList implements List {
     // Remove and return current element
     public Object remove() {
         if (curr == tail) {
-            // Nothing to remove
             return null;
         }
-        Object it = curr.element();             // Remember value
-        curr.setElement(curr.next().element()); // Pull forward the next element
-        if (curr.next() == tail) {
-            // Removed last, move tail
-            tail = curr;
-        }
-        curr.setNext(curr.next().next());       // Point around unneeded link
-        listSize--;                             // Decrement element count
-        return it;                              // Return value
+        Object it = curr.element();
+        curr.prev().setNext(curr.next());
+        curr.next().setPrev(curr.prev());
+        curr = curr.next();
+        listSize--;
+        return it;
     }
 
     public void moveToStart() {
@@ -71,15 +68,10 @@ class LList implements List {
 
     // Move curr one step left; no change if now at front
     public void prev() {
-        if (head.next() == curr) {
-            return; // No previous element
+        if (curr.prev() != head) {
+            curr = curr.prev();
+
         }
-        Link temp = head;
-        // March down list until we find the previous element
-        while (temp.next() != curr) {
-            temp = temp.next();
-        }
-        curr = temp;
     }
 
     // Move curr one step right; no change if now at end
